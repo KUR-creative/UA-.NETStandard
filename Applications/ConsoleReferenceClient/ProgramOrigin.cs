@@ -1,80 +1,32 @@
-using System;
-using System.IO;
-using System.Threading.Tasks;
-using Opc.Ua;
-using Opc.Ua.Configuration;
-using Quickstarts;
+/* ========================================================================
+ * Copyright (c) 2005-2021 The OPC Foundation, Inc. All rights reserved.
+ *
+ * OPC Foundation MIT License 1.00
+ * 
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without
+ * restriction, including without limitation the rights to use,
+ * copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following
+ * conditions:
+ * 
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * The complete license agreement can be found here:
+ * http://opcfoundation.org/License/MIT/1.00/
+ * ======================================================================*/
 
-namespace Playground
-{
-    public class Program
-    {
-        static int inc(int x)
-        {
-            return x + 1;
-        }
-
-        ///public static async Task Main(string[] args)
-        public static async Task Main(string[] args)
-        {
-            TextWriter output = Console.Out;
-            Uri serverUrl = new Uri("opc.tcp://localhost:4840");
-
-            //ApplicationInstance.MessageDlg = new ApplicationMessageDlg(output);
-            ApplicationInstance app = new ApplicationInstance {
-                ApplicationName = "testCsharpClient",
-                ApplicationType = ApplicationType.Client,
-                ConfigSectionName = "Quickstarts.ReferenceClient",
-                CertificatePasswordProvider = new CertificatePasswordProvider(null)
-            };
-
-            var config = await app.LoadApplicationConfiguration(silent: false)
-                .ConfigureAwait(false);
-            using (UAClient client = new UAClient(
-                app.ApplicationConfiguration, output,
-                ClientBase.ValidateResponse
-                ) {
-                AutoAccept = true,
-                SessionLifeTime = 60_000,
-            })
-            {
-                bool connected = false;
-                connected = await client.ConnectAsync(
-                    serverUrl.ToString()).ConfigureAwait(false);
-                output.WriteLine($"Is connected? {connected}");
-
-                //var nodeId = new NodeId("the.answer", 1);
-
-                ReadValueIdCollection nodesToRead = new ReadValueIdCollection()
-                {
-                    // Value of ServerStatus
-                    new ReadValueId() { NodeId = Variables.Server_ServerStatus, AttributeId = Attributes.Value },
-                    // BrowseName of ServerStatus_StartTime
-                    new ReadValueId() { NodeId = Variables.Server_ServerStatus_StartTime, AttributeId = Attributes.BrowseName },
-                    // Value of ServerStatus_StartTime
-                    new ReadValueId() { NodeId = Variables.Server_ServerStatus_StartTime, AttributeId = Attributes.Value },
-                    new ReadValueId() { NodeId = new NodeId("the.answer", 0), AttributeId = Attributes.Value },
-                    new ReadValueId() { NodeId = new NodeId("the.answer", 1), AttributeId = Attributes.Value }
-                };
-                client.Session.Read(
-                    null,
-                    0,
-                    TimestampsToReturn.Both,
-                    nodesToRead,
-                    out DataValueCollection resultsValues,
-                    out DiagnosticInfoCollection diagnosticInfos);
-
-                foreach (DataValue result in resultsValues)
-                {
-                    output.WriteLine("Read Value = {0} , StatusCode = {1}",
-                        result.Value, result.StatusCode);
-                }
-            }
-        }
-    }
-}
-
-/*
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -97,7 +49,7 @@ namespace Quickstarts.ConsoleReferenceClient
         /// <summary>
         /// Main entry point.
         /// </summary>
-        public static async Task Main(string[] args)
+        public static async Task Main1(string[] args)
         {
             TextWriter output = Console.Out;
             output.WriteLine("OPC UA Console Reference Client");
@@ -243,7 +195,9 @@ namespace Quickstarts.ConsoleReferenceClient
 
                     // create the UA Client object and connect to configured server.
 
-                    using (UAClient uaClient = new UAClient(application.ApplicationConfiguration, reverseConnectManager, output, ClientBase.ValidateResponse) {
+                    using (UAClient uaClient = new UAClient(
+                            application.ApplicationConfiguration,
+                            reverseConnectManager, output, ClientBase.ValidateResponse) {
                         AutoAccept = autoAccept,
                         SessionLifeTime = 60_000,
                     })
@@ -381,5 +335,3 @@ namespace Quickstarts.ConsoleReferenceClient
         }
     }
 }
-
-*/

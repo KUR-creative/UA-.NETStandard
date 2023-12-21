@@ -46,7 +46,8 @@ namespace Quickstarts
         /// <summary>
         /// Initializes a new instance of the UAClient class.
         /// </summary>
-        public UAClient(ApplicationConfiguration configuration, TextWriter writer, Action<IList, IList> validateResponse)
+        public UAClient(ApplicationConfiguration configuration,
+            TextWriter writer, Action<IList, IList> validateResponse)
         {
             m_validateResponse = validateResponse;
             m_output = writer;
@@ -58,7 +59,9 @@ namespace Quickstarts
         /// <summary>
         /// Initializes a new instance of the UAClient class for reverse connections.
         /// </summary>
-        public UAClient(ApplicationConfiguration configuration, ReverseConnectManager reverseConnectManager, TextWriter writer, Action<IList, IList> validateResponse)
+        public UAClient(ApplicationConfiguration configuration,
+            ReverseConnectManager reverseConnectManager,
+            TextWriter writer, Action<IList, IList> validateResponse)
         {
             m_validateResponse = validateResponse;
             m_output = writer;
@@ -222,6 +225,7 @@ namespace Quickstarts
             {
                 // Log Error
                 m_output.WriteLine("Create Session Error : {0}", ex.Message);
+                m_output.WriteLine(ex.ToString());
                 return false;
             }
         }
