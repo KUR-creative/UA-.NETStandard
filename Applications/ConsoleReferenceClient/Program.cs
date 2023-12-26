@@ -15,7 +15,7 @@ namespace Playground
         }
 
         ///public static async Task Main(string[] args)
-        public static async Task Main(string[] args)
+        public static async Task Main1(string[] args)
         {
             TextWriter output = Console.Out;
             Uri serverUrl = new Uri("opc.tcp://localhost:4840");

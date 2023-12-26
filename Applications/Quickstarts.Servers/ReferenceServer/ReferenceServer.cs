@@ -88,7 +88,8 @@ namespace Quickstarts.ReferenceServer
         /// </remarks>
         protected override ServerProperties LoadServerProperties()
         {
-            ServerProperties properties = new ServerProperties {
+            ServerProperties properties = new ServerProperties
+            {
                 ManufacturerName = "OPC Foundation",
                 ProductName = "Quickstart Reference Server",
                 ProductUri = "http://opcfoundation.org/Quickstart/ReferenceServer/v1.04",

@@ -49,7 +49,7 @@ namespace Quickstarts.ConsoleReferenceClient
         /// <summary>
         /// Main entry point.
         /// </summary>
-        public static async Task Main1(string[] args)
+        public static async Task Main(string[] args)
         {
             TextWriter output = Console.Out;
             output.WriteLine("OPC UA Console Reference Client");

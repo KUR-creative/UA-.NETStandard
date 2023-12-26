@@ -27,7 +27,6 @@
  * http://opcfoundation.org/License/MIT/1.00/
  * ======================================================================*/
 
-/*
 using System;
 using System.Globalization;
 using System.IO;
@@ -42,7 +41,7 @@ namespace Quickstarts.ReferenceServer
     /// </summary>
     public static class Program
     {
-        public static async Task<int> Main(string[] args)
+        public static async Task<int> Main2(string[] args)
         {
             TextWriter output = Console.Out;
             output.WriteLine("{0} OPC UA Reference Server", Utils.IsRunningOnMono() ? "Mono" : ".NET Core");
@@ -92,7 +91,8 @@ namespace Quickstarts.ReferenceServer
                 }
 
                 // create the UA server
-                var server = new UAServer<ReferenceServer>(output) {
+                var server = new UAServer<ReferenceServer>(output)
+                {
                     AutoAccept = autoAccept,
                     Password = password
                 };
@@ -159,4 +159,3 @@ namespace Quickstarts.ReferenceServer
         }
     }
 }
-*/
