@@ -63,7 +63,20 @@ namespace Playground
             output.WriteLine($"have app cert? = {haveAppCertificate}");
             output.WriteLine("cert is checked(accept all)");
 
-            // Add node(The answer 42) // factory 없이 해 보자
+            // Add node(The answer 42) // factory 없이 해 보자?
+            // ReferenceServer에서 ReferenceNodeManager, factory 이런 거 쓰는 듯?
+            // 파일: Applications/Quickstarts.Servers/ReferenceServer/ReferenceNodeManager
+            // 저 파일에 서버가 보내는 것들이 정의되어 있다. 후...
+
+            // INodeManager2에서 인터페이스 정의한 것을
+            // Opc.Ua.Server의 CustomNodeManager2에서 구현
+            // CustomNodeManager2을 상속하여 ReferenceNodeManager를 만든다
+            output.WriteLine(Quickstarts.Servers.Utils.NodeManagerFactories);
+            output.WriteLine(Quickstarts.Servers.Utils.NodeManagerFactories.Count);
+            foreach (var factory in Quickstarts.Servers.Utils.NodeManagerFactories)
+            {
+                output.WriteLine(factory);
+            }
 
             if (args.Length == 0) return; ///////////////////////////
             // Minimal server code that communicate with ProgramOrigin client
@@ -78,6 +91,10 @@ namespace Playground
             output.WriteLine("cert is checked(accept all)");
 
             server.Create(Quickstarts.Servers.Utils.NodeManagerFactories);
+            // Applications/Quickstarts.Servers/Utils.cs에 정의됨
+            // GetNodeManagerFactories는 INodeManagerFactory를 구현한
+            // 모든 팩토리를 가져온다고? 도대체 왜 이런 짓을 하는거야?
+            // 그냥 팩토리 클래스의 ctor로 만들면 안 될까? 왜 이러는데?
             output.WriteLine("Created and added the node managers");
 
             await server.StartAsync().ConfigureAwait(false);

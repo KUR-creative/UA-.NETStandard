@@ -57,12 +57,14 @@ namespace Quickstarts.Servers
                 {
                     methodsToCall.Add(
                         // Start the Alarms with infinite runtime
-                        new CallMethodRequest {
+                        new CallMethodRequest
+                        {
                             MethodId = new NodeId("Alarms.Start", (ushort)index),
                             ObjectId = new NodeId("Alarms", (ushort)index),
                             InputArguments = new VariantCollection() { new Variant((UInt32)UInt32.MaxValue) }
                         });
-                    var requestHeader = new RequestHeader() {
+                    var requestHeader = new RequestHeader()
+                    {
                         Timestamp = DateTime.UtcNow,
                         TimeoutHint = 10000
                     };
@@ -133,7 +135,9 @@ namespace Quickstarts.Servers
         private static IList<INodeManagerFactory> GetNodeManagerFactories()
         {
             var assembly = typeof(Utils).Assembly;
-            var nodeManagerFactories = assembly.GetExportedTypes().Select(type => IsINodeManagerFactoryType(type)).Where(type => type != null);
+            var nodeManagerFactories = assembly.GetExportedTypes().Select(
+                type => IsINodeManagerFactoryType(type)
+            ).Where(type => type != null);
             return nodeManagerFactories.ToList();
         }
 
