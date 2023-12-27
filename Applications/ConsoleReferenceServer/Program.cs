@@ -40,6 +40,34 @@ namespace Playground
         public static async Task Main(string[] args)
         {
             TextWriter output = Console.Out;
+            // Minimal server code that communicate with ProgramOrigin client
+            var server = new UAServer<MyServer>(output)
+            {
+                AutoAccept = true,
+            };
+            await server.LoadAsync("testCsharpServer", "Quickstarts.ReferenceServer").ConfigureAwait(false);
+            output.WriteLine("loading complete");
+
+            await server.CheckCertificateAsync(false).ConfigureAwait(false);
+            output.WriteLine("cert is checked(accept all)");
+
+            server.Create(Quickstarts.Servers.Utils.NodeManagerFactories);
+            // Applications/Quickstarts.Servers/Utils.cs에 정의됨
+            // GetNodeManagerFactories는 INodeManagerFactory를 구현한
+            // 모든 팩토리를 가져온다고? 도대체 왜 이런 짓을 하는거야?
+            // 그냥 팩토리 클래스의 ctor로 만들면 안 될까? 왜 이러는데?
+            output.WriteLine("Created and added the node managers");
+
+            await server.StartAsync().ConfigureAwait(false);
+            output.WriteLine("Server started");
+
+            var quitEvent = ConsoleUtils.CtrlCHandler();
+            bool ctrlc = quitEvent.WaitOne(-1);
+        }
+
+        public static async Task TryingMainWithoutFramework(string[] args)
+        {
+            TextWriter output = Console.Out;
 
             ApplicationInstance app = new ApplicationInstance
             {
@@ -77,8 +105,11 @@ namespace Playground
             {
                 output.WriteLine(factory);
             }
+        }
 
-            if (args.Length == 0) return; ///////////////////////////
+        public static async Task MinimalServerMain(string[] args)
+        {
+            TextWriter output = Console.Out;
             // Minimal server code that communicate with ProgramOrigin client
             var server = new UAServer<ReferenceServer>(output)
             {
@@ -102,7 +133,6 @@ namespace Playground
 
             var quitEvent = ConsoleUtils.CtrlCHandler();
             bool ctrlc = quitEvent.WaitOne(-1);
-
         }
     }
 }
