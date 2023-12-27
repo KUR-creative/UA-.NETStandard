@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using Opc.Ua;
+using Opc.Ua.Client;
 using Opc.Ua.Configuration;
 using Quickstarts;
 
@@ -15,10 +16,13 @@ namespace Playground
         }
 
         ///public static async Task Main(string[] args)
-        public static async Task Main1(string[] args)
+        public static async Task Main(string[] args)
         {
             TextWriter output = Console.Out;
-            Uri serverUrl = new Uri("opc.tcp://localhost:4840");
+            //Uri serverUrl = new Uri("opc.tcp://localhost:4840");
+            //Uri serverUrl = new Uri("opc.tcp://localhost:62541/Quickstarts/ReferenceServer");
+            //Uri serverUrl = new Uri("opc.tcp://localhost:4840");
+            Uri serverUrl = new Uri(args[0]);
 
             //ApplicationInstance.MessageDlg = new ApplicationMessageDlg(output);
             ApplicationInstance app = new ApplicationInstance {
@@ -53,8 +57,24 @@ namespace Playground
                     new ReadValueId() { NodeId = Variables.Server_ServerStatus_StartTime, AttributeId = Attributes.BrowseName },
                     // Value of ServerStatus_StartTime
                     new ReadValueId() { NodeId = Variables.Server_ServerStatus_StartTime, AttributeId = Attributes.Value },
-                    new ReadValueId() { NodeId = new NodeId("the.answer", 0), AttributeId = Attributes.Value },
-                    new ReadValueId() { NodeId = new NodeId("the.answer", 1), AttributeId = Attributes.Value }
+                    //new ReadValueId() { NodeId = new NodeId("root", 0), AttributeId = Attributes.Value },
+                    //new ReadValueId() { NodeId = new NodeId("root", 1), AttributeId = Attributes.Value },
+                    //new ReadValueId() { NodeId = new NodeId("root", 2), AttributeId = Attributes.Value },
+                    //new ReadValueId() { NodeId = new NodeId("the.answer", 0), AttributeId = Attributes.Value },
+                    //new ReadValueId() { NodeId = new NodeId("the.answer", 1), AttributeId = Attributes.Value },
+                    new ReadValueId() { NodeId = new NodeId("the.answer", 2), AttributeId = Attributes.Value },
+                    //new ReadValueId() { NodeId = new NodeId("the.answer", 3), AttributeId = Attributes.Value },
+                    //new ReadValueId() { NodeId = new NodeId("the.answer", 4), AttributeId = Attributes.Value },
+                    //new ReadValueId() { NodeId = new NodeId("the.answer", 5), AttributeId = Attributes.Value },
+                    //new ReadValueId() { NodeId = new NodeId("ns=2;s=Scalar_Static_Int32"), AttributeId = Attributes.Value },
+                    //new ReadValueId() { NodeId = new NodeId("Scalar_Static_Int16", 2), AttributeId = Attributes.Value },
+                    //new ReadValueId() { NodeId = new NodeId("Scalar_Static_Decimal", 2), AttributeId = Attributes.Value },
+                    //new ReadValueId() { NodeId = new NodeId("Scalar_Static_Int32", 2), AttributeId = Attributes.Value },
+                    //new ReadValueId() { NodeId = new NodeId("Scalar_Static_Int64", 2), AttributeId = Attributes.Value },
+                    //new ReadValueId() { NodeId = new NodeId("Scalar", 1), AttributeId = Attributes.Value },
+                    //new ReadValueId() { NodeId = new NodeId("Scalar_Instructions", 0), AttributeId = Attributes.Value },
+                    //new ReadValueId() { NodeId = new NodeId("Scalar_Instructions", 1), AttributeId = Attributes.Value },
+                    //new ReadValueId() { NodeId = new NodeId("Scalar_Instructions", 2), AttributeId = Attributes.Value },
                 };
                 client.Session.Read(
                     null,
@@ -69,6 +89,29 @@ namespace Playground
                     output.WriteLine("Read Value = {0} , StatusCode = {1}",
                         result.Value, result.StatusCode);
                 }
+
+                /*
+                // Browse
+                Browser browser = new Browser(client.Session);
+                browser.BrowseDirection = BrowseDirection.Forward;
+                //browser.NodeClassMask = (int)NodeClass.Object | (int)NodeClass.Variable;
+                browser.NodeClassMask = (int)NodeClass.Variable;
+                browser.ReferenceTypeId = ReferenceTypeIds.HierarchicalReferences;
+                browser.IncludeSubtypes = true;
+                NodeId nodeToBrowse = ObjectIds.Server;
+
+                // Call Browse service
+                output.WriteLine("Browsing {0} node...", nodeToBrowse);
+                ReferenceDescriptionCollection browseResults = browser.Browse(nodeToBrowse);
+
+                // Display the results
+                output.WriteLine("Browse returned {0} results:", browseResults.Count);
+
+                foreach (ReferenceDescription result in browseResults)
+                {
+                    output.WriteLine("     DisplayName = {0}, NodeClass = {1}", result.DisplayName.Text, result.NodeClass);
+                }
+                */
             }
         }
     }

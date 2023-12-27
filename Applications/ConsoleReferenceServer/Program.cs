@@ -41,8 +41,7 @@ namespace Playground
         {
             TextWriter output = Console.Out;
             // Minimal server code that communicate with ProgramOrigin client
-            var server = new UAServer<MyServer>(output)
-            {
+            var server = new UAServer<MyServer>(output) {
                 AutoAccept = true,
             };
             await server.LoadAsync("testCsharpServer", "Quickstarts.ReferenceServer").ConfigureAwait(false);
@@ -61,6 +60,9 @@ namespace Playground
             await server.StartAsync().ConfigureAwait(false);
             output.WriteLine("Server started");
 
+            //Console.WriteLine(NamespaceUris);
+            //System.Environment.Exit(0);
+
             var quitEvent = ConsoleUtils.CtrlCHandler();
             bool ctrlc = quitEvent.WaitOne(-1);
         }
@@ -69,8 +71,7 @@ namespace Playground
         {
             TextWriter output = Console.Out;
 
-            ApplicationInstance app = new ApplicationInstance
-            {
+            ApplicationInstance app = new ApplicationInstance {
                 ApplicationName = "testCsharpServer",
                 ApplicationType = ApplicationType.Server,
                 ConfigSectionName = "Quickstarts.ReferenceServer",
@@ -111,8 +112,7 @@ namespace Playground
         {
             TextWriter output = Console.Out;
             // Minimal server code that communicate with ProgramOrigin client
-            var server = new UAServer<ReferenceServer>(output)
-            {
+            var server = new UAServer<ReferenceServer>(output) {
                 AutoAccept = true,
             };
             await server.LoadAsync("testCsharpServer", "Quickstarts.ReferenceServer").ConfigureAwait(false);

@@ -70,7 +70,8 @@ namespace Quickstarts
 
                 ApplicationInstance.MessageDlg = new ApplicationMessageDlg(m_output);
                 CertificatePasswordProvider PasswordProvider = new CertificatePasswordProvider(Password);
-                m_application = new ApplicationInstance {
+                m_application = new ApplicationInstance
+                {
                     ApplicationName = applicationName,
                     ApplicationType = ApplicationType.Server,
                     ConfigSectionName = configSectionName,
