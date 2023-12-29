@@ -61,7 +61,7 @@ namespace Playground
                     //new ReadValueId() { NodeId = new NodeId("root", 1), AttributeId = Attributes.Value },
                     //new ReadValueId() { NodeId = new NodeId("root", 2), AttributeId = Attributes.Value },
                     //new ReadValueId() { NodeId = new NodeId("the.answer", 0), AttributeId = Attributes.Value },
-                    //new ReadValueId() { NodeId = new NodeId("the.answer", 1), AttributeId = Attributes.Value },
+                    new ReadValueId() { NodeId = new NodeId("the.answer", 1), AttributeId = Attributes.Value },
                     new ReadValueId() { NodeId = new NodeId("the.answer", 2), AttributeId = Attributes.Value },
                     //new ReadValueId() { NodeId = new NodeId("the.answer", 3), AttributeId = Attributes.Value },
                     //new ReadValueId() { NodeId = new NodeId("the.answer", 4), AttributeId = Attributes.Value },
